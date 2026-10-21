@@ -8,10 +8,10 @@
 <meta property="og:title" content="ロバート・ケリー氏と語ろう会 お申し込み">
 <meta property="og:description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCK。どなた様でも大歓迎！">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://lc100068-cmd.github.io/Kannaway-Events/images/hero.jpg">
+<meta property="og:image" content="https://lc100068-cmd.github.io/Kannaway-Events/images/hero-v2.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#2e7d32">
-<link rel="preload" as="image" href="images/hero.webp" type="image/webp">
+<link rel="preload" as="image" href="images/hero-v2.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -52,19 +52,43 @@
 
   /* ---------- hero ---------- */
   .hero-visual { max-width: 960px; margin: 0 auto; }
-  .hero-visual h1 { margin: 0; line-height: 0; }
+  .hero-banner { position: relative; overflow: hidden; }
   .hero-visual img {
-    display: block; width: 100%; height: auto; aspect-ratio: 1024 / 588;
+    display: block; width: 100%; height: auto; aspect-ratio: 1672 / 941;
     /* 写真の下端をページの背景に自然になじませる */
     -webkit-mask-image: linear-gradient(to bottom, #000 96%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 96%, transparent 100%);
   }
+  .hero-banner-copy {
+    position: absolute; top: 50%; left: 4%; width: 48%; transform: translateY(-50%);
+    color: var(--green-900); text-align: left;
+  }
+  .hero-banner-copy .catch { margin: 0 0 8px; font: 700 clamp(12px, 2vw, 20px)/1.4 "Zen Maru Gothic", sans-serif; }
+  .hero-banner-copy h1 {
+    margin: 0; color: var(--green-900);
+    font: 700 clamp(25px, 5vw, 52px)/1.16 "Zen Maru Gothic", sans-serif;
+    letter-spacing: -.04em;
+  }
+  .hero-banner-copy h1 small { display: block; margin-top: 5px; font-size: .58em; color: var(--ink); }
+  .hero-banner-copy .ribbon {
+    display: inline-block; margin: 14px 0 0; padding: 5px 10px; border-radius: 999px;
+    color: #fff; background: var(--green-700);
+    font: 700 clamp(10px, 1.7vw, 16px)/1.4 "Zen Maru Gothic", sans-serif;
+  }
+  @media (max-width: 480px) {
+    .hero-banner-copy { left: 3%; width: 52%; }
+    .hero-banner-copy .catch { margin-bottom: 4px; font-size: 11px; }
+    .hero-banner-copy h1 { font-size: clamp(23px, 6.5vw, 30px); }
+    .hero-banner-copy .ribbon { margin-top: 7px; padding: 3px 7px; font-size: 10px; }
+  }
   @media (min-width: 960px) {
     .hero-visual { padding-top: 24px; }
-    .hero-visual img {
+    .hero-banner {
       border-radius: 24px;
-      -webkit-mask-image: none; mask-image: none;
       box-shadow: 0 10px 40px rgba(31, 77, 43, .18);
+    }
+    .hero-visual img {
+      -webkit-mask-image: none; mask-image: none;
     }
   }
 
@@ -289,13 +313,14 @@
 <div class="demo-banner" id="demo-banner" hidden>デモモード：送信しても保存・メール送信はされません（config.js に GAS_URL を設定すると本番になります）</div>
 
 <header class="hero-visual">
-  <h1>
-    <picture>
-      <source srcset="images/hero.webp" type="image/webp">
-      <img src="images/hero.jpg" width="1024" height="588" fetchpriority="high"
-        alt="この人に会えば、人生の見え方が変わる。ロバート・ケリー氏と語ろう 前回満員御礼！大好評につき、再開催決定！ どなた様でも大歓迎！">
-    </picture>
-  </h1>
+  <div class="hero-banner">
+    <img src="images/hero-v2.png" width="1672" height="941" fetchpriority="high" alt="緑に囲まれ、笑顔で語りかけるロバート・ケリー氏をイメージしたバナー">
+    <div class="hero-banner-copy">
+      <p class="catch">この人に会えば、人生の見え方が変わる。</p>
+      <h1>ロバート・ケリー氏<small>と語ろう</small></h1>
+      <p class="ribbon">前回満員御礼！ 再開催決定</p>
+    </div>
+  </div>
 </header>
 
 <div class="wrap">
