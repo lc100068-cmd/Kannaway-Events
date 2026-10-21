@@ -69,6 +69,7 @@
     font: 700 clamp(25px, 5vw, 52px)/1.16 "Zen Maru Gothic", sans-serif;
     letter-spacing: -.04em;
   }
+  .hero-banner-copy h1 .name { display: block; }
   .hero-banner-copy h1 small { display: block; margin-top: 5px; font-size: .58em; color: var(--ink); }
   .hero-banner-copy .ribbon {
     display: inline-block; margin: 14px 0 0; padding: 5px 10px; border-radius: 999px;
@@ -76,10 +77,23 @@
     font: 700 clamp(10px, 1.7vw, 16px)/1.4 "Zen Maru Gothic", sans-serif;
   }
   @media (max-width: 480px) {
-    .hero-banner-copy { left: 3%; width: 52%; }
-    .hero-banner-copy .catch { margin-bottom: 4px; font-size: 11px; }
-    .hero-banner-copy h1 { font-size: clamp(23px, 6.5vw, 30px); }
-    .hero-banner-copy .ribbon { margin-top: 7px; padding: 3px 7px; font-size: 10px; }
+    .hero-banner { overflow: visible; }
+    .hero-visual img {
+      height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 69% center;
+      -webkit-mask-image: none; mask-image: none;
+    }
+    .hero-banner-copy {
+      position: relative; z-index: 1; top: auto; left: auto; width: auto;
+      transform: none; margin: -26px 16px 0; padding: 18px 14px 20px;
+      text-align: center; background: rgba(251, 250, 244, .97);
+      border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(31, 77, 43, .14);
+    }
+    .hero-banner-copy .catch { margin-bottom: 6px; font-size: clamp(11px, 3.2vw, 13px); }
+    .hero-banner-copy h1 { font-size: clamp(27px, 8vw, 36px); line-height: 1.3; letter-spacing: -.05em; }
+    .hero-banner-copy h1 small { margin-top: 0; font-size: .68em; }
+    .hero-banner-copy .ribbon { margin-top: 10px; padding: 5px 12px; font-size: 12px; }
+    .date-card { margin-top: 16px; }
   }
   @media (min-width: 960px) {
     .hero-visual { padding-top: 24px; }
@@ -317,7 +331,7 @@
     <img src="images/hero-v2.png" width="1672" height="941" fetchpriority="high" alt="緑に囲まれ、笑顔で語りかけるロバート・ケリー氏をイメージしたバナー">
     <div class="hero-banner-copy">
       <p class="catch">この人に会えば、人生の見え方が変わる。</p>
-      <h1>ロバート・ケリー氏<small>と語ろう</small></h1>
+      <h1><span class="name">ロバート・ケリー氏</span><small>と語ろう</small></h1>
       <p class="ribbon">前回満員御礼！ 再開催決定</p>
     </div>
   </div>
