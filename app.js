@@ -13,9 +13,9 @@
 
   // uses: 定員を消費する部 / start・end: カレンダー登録用の時刻（開場〜終了）
   const PARTS = {
-    both: { label: '第一部・第二部 両方', short: '第一部・第二部', uses: ['part1', 'part2'], start: '10:00', end: '16:30', time: '10:00 開場〜16:30' },
-    part1: { label: '第一部のみ', short: '第一部', uses: ['part1'], start: '10:00', end: '12:00', time: '10:00 開場／10:30〜12:00' },
-    part2: { label: '第二部のみ', short: '第二部', uses: ['part2'], start: '13:00', end: '16:30', time: '13:00 開場／13:30〜16:30' },
+    both: { label: '第一部・第二部 両方', short: '第一部・第二部', uses: ['part1', 'part2'], start: '12:30', end: '17:30', time: '受付 12:30〜／13:00〜17:30' },
+    part1: { label: '第一部のみ', short: '第一部', uses: ['part1'], start: '12:30', end: '14:30', time: '受付 12:30〜12:50／13:00〜14:30' },
+    part2: { label: '第二部のみ', short: '第二部', uses: ['part2'], start: '14:30', end: '17:30', time: '14:30〜17:30' },
   };
 
   const $ = (sel, root = document) => root.querySelector(sel);
@@ -347,7 +347,6 @@
     ];
     if (PARTS[d.part].uses.includes('part1')) notes.push('第一部の参加費 1,000円は、当日受付にてお支払いください。');
     if (PARTS[d.part].uses.includes('part2') && d.member === '会員') notes.push('第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
-    if (d.part === 'both') notes.push('第一部・第二部を通してご参加の方は、昼食をご持参ください。');
 
     const ul = $('#done-notes');
     ul.textContent = '';

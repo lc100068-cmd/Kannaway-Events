@@ -34,8 +34,8 @@ const PARTS = {
 };
 
 const PART_DETAIL = {
-  part1: '第一部「ロバート・ケリー氏と語ろう会」　開場 10:00／10:30〜12:00',
-  part2: '第二部「「麻」が持つ本当の魅力 キャナウェイ説明会」　開場 13:00／13:30〜16:30',
+  part1: '第一部「ロバート・ケリー氏と語ろう会」　受付 12:30〜12:50／13:00〜14:30',
+  part2: '第二部「「麻」が持つ本当の魅力 キャナウェイ説明会」　14:30〜17:30',
 };
 
 const HEADERS = [
@@ -244,7 +244,6 @@ function entryLines_(entry) {
   const notes = [];
   if (uses.indexOf('part1') >= 0) notes.push('・第一部の参加費 1,000円は、当日受付にてお支払いください。');
   if (uses.indexOf('part2') >= 0 && entry.member === '会員') notes.push('・第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
-  if (entry.part === 'both') notes.push('・第一部・第二部を通してご参加の方は、昼食をご持参ください。');
   if (notes.length) lines.push('', '■ 当日のご案内', ...notes);
   return lines;
 }

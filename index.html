@@ -205,10 +205,6 @@
   .map { margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 10; background: var(--green-50); }
   .map iframe { width: 100%; height: 100%; border: 0; display: block; }
   .venue .map-link { display: inline-block; margin-top: 8px; color: var(--green-700); font-weight: 700; }
-  .lunch {
-    margin-top: 14px; padding: 10px 14px; border-radius: 10px;
-    background: var(--green-50); font-size: 14px;
-  }
 
   /* ---------- steps ---------- */
   .steps { display: flex; justify-content: center; gap: 6px; list-style: none; padding: 0; margin: 0 0 20px; }
@@ -340,7 +336,7 @@
     <div class="date" aria-label="2026年11月23日 月曜日 祝日">
       <span class="y">2026</span><span class="md">11.23</span><span class="dow">月・祝</span>
     </div>
-    <p class="date-meta"><b>第一部</b> 10:30〜　<b>第二部</b> 13:30〜<br>岡山・レンタルスペース GOODLUCK</p>
+    <p class="date-meta"><b>第一部</b> 13:00〜（受付 12:30〜）　<b>第二部</b> 14:30〜<br>岡山・レンタルスペース GOODLUCK</p>
     <div class="cta"><a class="btn btn-primary" href="#apply">お申し込みはこちら</a></div>
     <p class="deadline-note">申込締切：<span class="js-deadline"></span></p>
   </section>
@@ -363,8 +359,8 @@
           <span class="tag">第一部</span>
           <h3>ロバート・ケリー氏と語ろう会</h3>
           <dl>
-            <dt>開場</dt><dd>10:00</dd>
-            <dt>時間</dt><dd>10:30〜12:00</dd>
+            <dt>受付</dt><dd>12:30〜12:50</dd>
+            <dt>時間</dt><dd>13:00〜14:30</dd>
             <dt>参加費</dt><dd>1,000円</dd>
           </dl>
           <p class="sub">これからの時代やビジネス、人の心について直接聞ける貴重な時間！</p>
@@ -374,8 +370,7 @@
           <span class="tag">第二部</span>
           <h3>「麻」が持つ本当の魅力<small>キャナウェイ説明会</small></h3>
           <dl>
-            <dt>開場</dt><dd>13:00</dd>
-            <dt>時間</dt><dd>13:30〜16:30</dd>
+            <dt>時間</dt><dd>14:30〜17:30</dd>
             <dt>参加費</dt><dd>無料</dd>
           </dl>
           <p class="sub">※会員様のみ会場協力費として1,000円お預かりいたします。</p>
@@ -393,7 +388,6 @@
           src="https://maps.google.com/maps?q=%E5%B2%A1%E5%B1%B1%E7%9C%8C%E5%B2%A1%E5%B1%B1%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%9B%BD%E5%BA%9C%E5%B8%82%E5%A0%B4331-3&z=15&output=embed"></iframe>
       </div>
       <a class="map-link js-map-link" target="_blank" rel="noopener">Googleマップで開く →</a>
-      <p class="lunch">🍱 第一部・第二部を通してご参加の方は、昼食をご持参ください。</p>
     </section>
 
     <section class="card" id="apply" aria-labelledby="apply-title">
@@ -440,7 +434,7 @@
               <input type="radio" name="part" value="both">
               <span class="choice-body">
                 <strong>第一部・第二部 両方</strong>
-                <small>10:00 開場〜16:30　※昼食をご持参ください</small>
+                <small>受付 12:30〜／13:00〜17:30</small>
                 <em class="seat"></em>
               </span>
             </label>
@@ -448,7 +442,7 @@
               <input type="radio" name="part" value="part1">
               <span class="choice-body">
                 <strong>第一部のみ（ロバート・ケリー氏と語ろう会）</strong>
-                <small>10:00 開場／10:30〜12:00　参加費 1,000円</small>
+                <small>受付 12:30〜12:50／13:00〜14:30　参加費 1,000円</small>
                 <em class="seat"></em>
               </span>
             </label>
@@ -456,7 +450,7 @@
               <input type="radio" name="part" value="part2">
               <span class="choice-body">
                 <strong>第二部のみ（キャナウェイ説明会）</strong>
-                <small>13:00 開場／13:30〜16:30　参加費 無料</small>
+                <small>14:30〜17:30　参加費 無料</small>
                 <em class="seat"></em>
               </span>
             </label>
