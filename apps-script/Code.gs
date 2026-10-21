@@ -244,6 +244,7 @@ function entryLines_(entry) {
   const notes = [];
   if (uses.indexOf('part1') >= 0) notes.push('・第一部の参加費 1,000円は、当日受付にてお支払いください。');
   if (uses.indexOf('part2') >= 0 && entry.member === '会員') notes.push('・第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
+  notes.push('・スリッパをご持参いただけると助かります。');
   if (notes.length) lines.push('', '■ 当日のご案内', ...notes);
   return lines;
 }

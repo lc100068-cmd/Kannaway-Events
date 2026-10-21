@@ -347,6 +347,7 @@
     ];
     if (PARTS[d.part].uses.includes('part1')) notes.push('第一部の参加費 1,000円は、当日受付にてお支払いください。');
     if (PARTS[d.part].uses.includes('part2') && d.member === '会員') notes.push('第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
+    notes.push('スリッパをご持参いただけると助かります。');
 
     const ul = $('#done-notes');
     ul.textContent = '';
