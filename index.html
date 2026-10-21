@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ロバート・ケリー氏と語ろう会 お申し込み</title>
+<meta name="description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCKにて開催。前回満員御礼、大好評につき再開催決定！">
+<meta property="og:title" content="ロバート・ケリー氏と語ろう会 お申し込み">
+<meta property="og:description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCK。どなた様でも大歓迎！">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --green-900: #1f4d2b;
+    --green-700: #2e7d32;
+    --green-600: #3d8b40;
+    --green-100: #e7f2e1;
+    --green-50: #f3f8ef;
+    --cream: #fbfaf4;
+    --paper: #ffffff;
+    --ink: #2a2f2a;
+    --muted: #5e6a5e;
+    --line: #d5e3cf;
+    --gold: #a77b1f;
+    --warn: #b3541e;
+    --danger: #c0392b;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Noto Sans JP", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 500px at 110% -10%, #d9ecd0 0, transparent 60%),
+      radial-gradient(900px 400px at -20% 10%, #e4f1dc 0, transparent 60%),
+      var(--cream);
+    line-height: 1.7;
+    -webkit-text-size-adjust: 100%;
+    word-break: auto-phrase;
+  }
+  h1, h2, h3, .maru { font-family: "Zen Maru Gothic", "Noto Sans JP", sans-serif; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- hero ---------- */
+  .hero { text-align: center; padding: 40px 0 28px; }
+  .catch { margin: 0; color: var(--green-900); font-size: 15px; letter-spacing: .08em; }
+  .hero h1 {
+    margin: 8px 0 12px; color: var(--green-700);
+    font-size: clamp(32px, 9vw, 48px); line-height: 1.25; letter-spacing: .02em;
+  }
+  .hero h1 small { display: block; font-size: .55em; color: var(--ink); margin-top: 4px; }
+  .ribbon {
+    display: inline-block; margin: 0 0 18px; padding: 6px 18px;
+    background: var(--green-700); color: #fff; border-radius: 999px;
+    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; font-size: 15px;
+  }
+  .date {
+    display: flex; align-items: baseline; justify-content: center; gap: 10px;
+    color: var(--green-900); font-family: "Zen Maru Gothic", sans-serif; font-weight: 700;
+  }
+  .date .y { font-size: 18px; }
+  .date .md { font-size: 52px; line-height: 1; letter-spacing: .02em; }
+  .date .dow {
+    font-size: 15px; background: var(--green-700); color: #fff;
+    border-radius: 999px; padding: 4px 10px; transform: translateY(-6px);
+  }
+  .lead { margin: 18px auto 0; max-width: 30em; font-size: 15px; color: var(--muted); }
+  .topics { list-style: none; padding: 0; margin: 14px auto 0; max-width: 22em; text-align: left; }
+  .topics li { padding-left: 1.6em; position: relative; font-size: 15px; }
+  .topics li::before { content: "🌿"; position: absolute; left: 0; }
+  .cta { margin-top: 22px; }
+  .deadline-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 52px; padding: 12px 28px; border-radius: 999px; border: 2px solid transparent;
+    font: 700 17px/1.3 "Zen Maru Gothic", sans-serif; text-decoration: none; cursor: pointer;
+    transition: transform .08s, background .15s, opacity .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--green-700); color: #fff; box-shadow: 0 4px 0 var(--green-900); }
+  .btn-primary:hover { background: var(--green-600); }
+  .btn-ghost { background: var(--paper); color: var(--green-700); border-color: var(--green-700); }
+  .btn[disabled] { opacity: .6; cursor: wait; }
+  .btn-block { width: 100%; }
+  :focus-visible { outline: 3px solid #f0b429; outline-offset: 2px; }
+
+  /* ---------- cards ---------- */
+  .card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 18px; margin: 0 0 18px; box-shadow: 0 2px 10px rgba(31, 77, 43, .06);
+  }
+  .section-title {
+    display: flex; align-items: center; gap: 8px; margin: 0 0 14px;
+    color: var(--green-900); font-size: 20px;
+  }
+  .parts { display: grid; gap: 14px; }
+  @media (min-width: 560px) { .parts { grid-template-columns: 1fr 1fr; } }
+  .part { margin: 0; }
+  .part .tag {
+    display: inline-block; background: var(--green-100); color: var(--green-900);
+    font: 700 14px "Zen Maru Gothic", sans-serif; padding: 2px 14px; border-radius: 999px;
+  }
+  .part h3 { margin: 8px 0 6px; font-size: 19px; line-height: 1.4; color: var(--ink); }
+  .part h3 small { display: block; font-size: 14px; color: var(--muted); font-weight: 500; }
+  .part dl { margin: 8px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 15px; }
+  .part dt { color: var(--muted); }
+  .part dd { margin: 0; font-weight: 700; }
+  .part .sub { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+  .seat-badge {
+    display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 700;
+    padding: 2px 10px; border-radius: 6px; background: var(--green-50); color: var(--green-700);
+  }
+  .seat-badge.few { background: #fff3e6; color: var(--warn); }
+  .seat-badge.full { background: #fdecea; color: var(--danger); }
+  .seat-badge:empty { display: none; }
+
+  .venue p { margin: 0; }
+  .venue .name { font-weight: 700; font-size: 17px; }
+  .venue .addr { color: var(--muted); font-size: 15px; }
+  .map { margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 10; background: var(--green-50); }
+  .map iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .venue .map-link { display: inline-block; margin-top: 8px; color: var(--green-700); font-weight: 700; }
+  .lunch {
+    margin-top: 14px; padding: 10px 14px; border-radius: 10px;
+    background: var(--green-50); font-size: 14px;
+  }
+
+  /* ---------- steps ---------- */
+  .steps { display: flex; justify-content: center; gap: 6px; list-style: none; padding: 0; margin: 0 0 20px; }
+  .steps li {
+    display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--muted);
+  }
+  .steps li + li::before { content: ""; width: 18px; height: 2px; background: var(--line); margin-right: 2px; }
+  .steps .num {
+    display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+    background: var(--green-50); border: 2px solid var(--line); font-weight: 700; font-size: 13px;
+  }
+  .steps li.is-current { color: var(--green-900); font-weight: 700; }
+  .steps li.is-current .num, .steps li.is-done .num { background: var(--green-700); border-color: var(--green-700); color: #fff; }
+
+  /* ---------- form ---------- */
+  .field { margin: 0 0 20px; border: 0; padding: 0; min-width: 0; }
+  .field > label, .field > legend {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px; padding: 0;
+    font-weight: 700; font-size: 16px;
+  }
+  .req, .opt { font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 4px; }
+  .req { background: var(--danger); color: #fff; }
+  .opt { background: #eceeea; color: var(--muted); }
+  .hint { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+  input[type=text], input[type=tel], input[type=email], select, textarea {
+    width: 100%; min-height: 50px; padding: 10px 14px;
+    border: 1.5px solid #c4d3be; border-radius: 10px; background: #fff;
+    font: 16px/1.5 "Noto Sans JP", sans-serif; color: var(--ink);
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { border-color: var(--green-700); outline: none; box-shadow: 0 0 0 3px rgba(46, 125, 50, .18); }
+  [aria-invalid="true"] { border-color: var(--danger) !important; background: #fffafa; }
+  .err { margin: 6px 0 0; color: var(--danger); font-size: 14px; font-weight: 700; }
+  .err:empty { display: none; }
+
+  .choices { display: grid; gap: 10px; }
+  .choices.cols-2 { grid-template-columns: 1fr 1fr; }
+  .choice { position: relative; display: block; cursor: pointer; }
+  .choice input { position: absolute; opacity: 0; inset: 0; pointer-events: none; }
+  .choice-body {
+    display: block; padding: 12px 14px 12px 46px; border: 1.5px solid #c4d3be; border-radius: 12px;
+    background: #fff; position: relative; transition: border-color .15s, background .15s;
+  }
+  .choice-body::before {
+    content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 20px; border-radius: 50%; border: 2px solid #9fb59a; background: #fff;
+  }
+  .choice input[type=checkbox] + .choice-body::before { border-radius: 5px; }
+  .choice input:checked + .choice-body { border-color: var(--green-700); background: var(--green-50); box-shadow: 0 0 0 1px var(--green-700) inset; }
+  .choice input:checked + .choice-body::before { border-color: var(--green-700); background: var(--green-700); box-shadow: inset 0 0 0 3px #fff; }
+  .choice input[type=checkbox]:checked + .choice-body::before { box-shadow: none; background: var(--green-700) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10.5l3.2 3L15 6.5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px no-repeat; }
+  .choice input:focus-visible + .choice-body { outline: 3px solid #f0b429; outline-offset: 2px; }
+  .choice strong { display: block; font-size: 16px; }
+  .choice small { display: block; font-size: 13px; color: var(--muted); }
+  .choice .seat { display: inline-block; margin-top: 2px; font-size: 12px; font-weight: 700; font-style: normal; color: var(--green-700); }
+  .choice .seat.few { color: var(--warn); }
+  .choice .seat:empty { display: none; }
+  .choice.is-full { cursor: not-allowed; }
+  .choice.is-full .choice-body { background: #f4f4f2; color: #9a9a95; }
+  .choice.is-full .seat { color: var(--danger); }
+  .fieldset-invalid .choice-body { border-color: var(--danger); }
+
+  .total { margin: 8px 0 0; font-size: 15px; }
+  .total b { color: var(--green-700); font-size: 18px; }
+  .notice {
+    margin: 8px 0 0; padding: 10px 12px; border-radius: 10px; font-size: 14px;
+    background: #fff8e6; border: 1px solid #f1dfae;
+  }
+  .notice:empty { display: none; }
+  .privacy { font-size: 13px; color: var(--muted); margin: 4px 0 18px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  /* ---------- confirm / done ---------- */
+  .confirm-list { margin: 0 0 20px; border-top: 1px solid var(--line); }
+  .confirm-list div { display: grid; grid-template-columns: 7.5em 1fr; gap: 10px; padding: 10px 2px; border-bottom: 1px solid var(--line); }
+  .confirm-list dt { color: var(--muted); font-size: 14px; }
+  .confirm-list dd { margin: 0; font-weight: 700; white-space: pre-wrap; word-break: break-word; }
+  .btn-row { display: grid; gap: 10px; }
+  @media (min-width: 560px) { .btn-row { grid-template-columns: 1fr 2fr; } }
+  .alert { margin: 0 0 16px; padding: 12px 14px; border-radius: 10px; background: #fdecea; color: var(--danger); font-weight: 700; font-size: 14px; }
+  .alert:empty, .alert[hidden] { display: none; }
+
+  .done { text-align: center; }
+  .done .icon {
+    width: 64px; height: 64px; margin: 0 auto 8px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--green-700); color: #fff; font-size: 34px;
+  }
+  .done h2 { margin: 0 0 6px; color: var(--green-900); font-size: 22px; }
+  .receipt { display: inline-block; margin: 8px 0 4px; padding: 6px 16px; border-radius: 10px; background: var(--green-50); border: 1px dashed var(--green-700); }
+  .receipt b { font-size: 20px; letter-spacing: .06em; color: var(--green-900); }
+  .done .mail-note { font-size: 14px; color: var(--muted); }
+  .done-info { text-align: left; margin: 18px 0; padding: 14px 16px; border-radius: 12px; background: var(--green-50); }
+  .done-info h3 { margin: 0 0 6px; font-size: 16px; color: var(--green-900); }
+  .done-info ul { margin: 0; padding-left: 1.2em; }
+  .done-info li { margin: 4px 0; font-size: 15px; }
+  .done .actions { display: grid; gap: 10px; }
+
+  .closed { text-align: center; }
+  .closed h2 { color: var(--green-900); margin: 0 0 8px; }
+
+  .demo-banner {
+    position: sticky; top: 0; z-index: 10; background: #fff3cd; color: #6b4e00;
+    text-align: center; font-size: 13px; padding: 6px 12px; border-bottom: 1px solid #f1dfae;
+  }
+  footer { text-align: center; padding: 26px 16px 40px; color: var(--green-900); font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; }
+  footer .contact { display: block; margin-top: 6px; font-family: "Noto Sans JP", sans-serif; font-weight: 400; font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="demo-banner" id="demo-banner" hidden>デモモード：送信しても保存・メール送信はされません（config.js に GAS_URL を設定すると本番になります）</div>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="catch">この人に会えば、人生の見え方が変わる。</p>
+    <h1>ロバート・ケリー氏<small>と語ろう</small></h1>
+    <p class="ribbon">前回満員御礼！ 大好評につき再開催決定</p>
+    <div class="date" aria-label="2026年11月23日 月曜日 祝日">
+      <span class="y">2026</span><span class="md">11.23</span><span class="dow">月・祝</span>
+    </div>
+    <p class="lead">日本にAppleコンピュータを導入した5人のうちの1人。<br>時代の変化を見て、動かしてきた人だからこそ語れるお話です。</p>
+    <ul class="topics">
+      <li>これからの時代の捉え方</li>
+      <li>ビジネスや人の心理</li>
+      <li>これからの人生をどう生きるのか</li>
+    </ul>
+    <div class="cta"><a class="btn btn-primary" href="#apply">お申し込みはこちら</a></div>
+    <p class="deadline-note">申込締切：<span class="js-deadline"></span>　どなた様でも大歓迎！</p>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="program-title">
+      <h2 class="section-title" id="program-title">🍃 プログラム</h2>
+      <div class="parts">
+        <article class="part">
+          <span class="tag">第一部</span>
+          <h3>ロバート・ケリー氏と語ろう会</h3>
+          <dl>
+            <dt>開場</dt><dd>10:00</dd>
+            <dt>時間</dt><dd>10:30〜12:00</dd>
+            <dt>参加費</dt><dd>1,000円</dd>
+          </dl>
+          <p class="sub">これからの時代やビジネス、人の心について直接聞ける貴重な時間！</p>
+          <span class="seat-badge" data-seat="part1">残席を確認中…</span>
+        </article>
+        <article class="part">
+          <span class="tag">第二部</span>
+          <h3>「麻」が持つ本当の魅力<small>キャナウェイ説明会</small></h3>
+          <dl>
+            <dt>開場</dt><dd>13:00</dd>
+            <dt>時間</dt><dd>13:30〜16:30</dd>
+            <dt>参加費</dt><dd>無料</dd>
+          </dl>
+          <p class="sub">※会員様のみ会場協力費として1,000円お預かりいたします。</p>
+          <span class="seat-badge" data-seat="part2">残席を確認中…</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="card venue" aria-labelledby="venue-title">
+      <h2 class="section-title" id="venue-title">📍 会場</h2>
+      <p class="name">レンタルスペース GOODLUCK</p>
+      <p class="addr">〒703-8203 岡山県岡山市中区国府市場331-3</p>
+      <div class="map">
+        <iframe title="会場の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=%E5%B2%A1%E5%B1%B1%E7%9C%8C%E5%B2%A1%E5%B1%B1%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%9B%BD%E5%BA%9C%E5%B8%82%E5%A0%B4331-3&z=15&output=embed"></iframe>
+      </div>
+      <a class="map-link js-map-link" target="_blank" rel="noopener">Googleマップで開く →</a>
+      <p class="lunch">🍱 第一部・第二部を通してご参加の方は、昼食をご持参ください。</p>
+    </section>
+
+    <section class="card" id="apply" aria-labelledby="apply-title">
+      <h2 class="section-title" id="apply-title">✍️ お申し込みフォーム</h2>
+
+      <ol class="steps" id="steps">
+        <li data-step="1" class="is-current"><span class="num">1</span>入力</li>
+        <li data-step="2"><span class="num">2</span>確認</li>
+        <li data-step="3"><span class="num">3</span>完了</li>
+      </ol>
+
+      <!-- STEP 1: 入力 -->
+      <form id="entry-form" novalidate>
+        <div class="field">
+          <label for="name">お名前 <span class="req">必須</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" placeholder="例）山田 花子" maxlength="50">
+          <p class="err" data-err="name"></p>
+        </div>
+
+        <div class="field">
+          <label for="kana">ふりがな <span class="req">必須</span></label>
+          <input type="text" id="kana" name="kana" placeholder="例）やまだ はなこ" maxlength="50">
+          <p class="err" data-err="kana"></p>
+        </div>
+
+        <div class="field">
+          <label for="phone">電話番号 <span class="req">必須</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="例）090-1234-5678" maxlength="20">
+          <p class="hint">当日ご連絡が必要な場合に使用します。</p>
+          <p class="err" data-err="phone"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">メールアドレス <span class="req">必須</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" placeholder="例）hanako@example.com" maxlength="100">
+          <p class="hint">お申し込み確認メールをお送りします。</p>
+          <p class="err" data-err="email"></p>
+        </div>
+
+        <fieldset class="field" id="part-field">
+          <legend>参加する部 <span class="req">必須</span></legend>
+          <div class="choices">
+            <label class="choice">
+              <input type="radio" name="part" value="both">
+              <span class="choice-body">
+                <strong>第一部・第二部 両方</strong>
+                <small>10:00 開場〜16:30　※昼食をご持参ください</small>
+                <em class="seat"></em>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="part" value="part1">
+              <span class="choice-body">
+                <strong>第一部のみ（ロバート・ケリー氏と語ろう会）</strong>
+                <small>10:00 開場／10:30〜12:00　参加費 1,000円</small>
+                <em class="seat"></em>
+              </span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="part" value="part2">
+              <span class="choice-body">
+                <strong>第二部のみ（キャナウェイ説明会）</strong>
+                <small>13:00 開場／13:30〜16:30　参加費 無料</small>
+                <em class="seat"></em>
+              </span>
+            </label>
+          </div>
+          <p class="err" data-err="part"></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="companions">一緒に来られる方の人数 <span class="req">必須</span></label>
+          <select id="companions" name="companions">
+            <option value="0">いない（ご本人のみ）</option>
+            <option value="1">1名</option>
+            <option value="2">2名</option>
+            <option value="3">3名</option>
+            <option value="4">4名</option>
+            <option value="5">5名</option>
+          </select>
+          <p class="hint">ご本人を除いた人数です。6名以上の場合はメッセージ欄にご記入ください。</p>
+          <p class="total">合計 <b id="total-count">1</b> 名でのお申し込み</p>
+          <p class="err" data-err="companions"></p>
+        </div>
+
+        <fieldset class="field" id="member-field">
+          <legend>キャナウェイ会員ですか？ <span class="req">必須</span></legend>
+          <div class="choices cols-2">
+            <label class="choice">
+              <input type="radio" name="member" value="会員">
+              <span class="choice-body"><strong>会員</strong></span>
+            </label>
+            <label class="choice">
+              <input type="radio" name="member" value="非会員">
+              <span class="choice-body"><strong>非会員</strong><small>はじめての方など</small></span>
+            </label>
+          </div>
+          <p class="notice" id="member-notice"></p>
+          <p class="err" data-err="member"></p>
+        </fieldset>
+
+        <div class="field">
+          <label for="referrer">ご紹介者のお名前 <span class="opt">任意</span></label>
+          <input type="text" id="referrer" name="referrer" placeholder="例）岡山 太郎さん" maxlength="50">
+        </div>
+
+        <div class="field">
+          <label for="message">ご質問・メッセージ <span class="opt">任意</span></label>
+          <textarea id="message" name="message" maxlength="1000" placeholder="ケリー氏に聞いてみたいこと、ご連絡事項などがあればご自由にどうぞ"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="choice">
+            <input type="checkbox" name="nextInfo" value="yes">
+            <span class="choice-body">
+              <strong>次回のイベント案内を希望する</strong>
+              <small>今後のイベント情報を、ご入力のメールアドレスにお送りします。</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label>この欄は空のままにしてください <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
+        <p class="privacy">ご入力いただいた個人情報は、本イベントの運営と（ご希望の方のみ）次回イベントのご案内にのみ使用します。</p>
+        <button type="submit" class="btn btn-primary btn-block">入力内容を確認する</button>
+      </form>
+
+      <!-- STEP 2: 確認 -->
+      <div id="confirm-view" hidden>
+        <p style="margin:0 0 12px">以下の内容でお申し込みします。よろしければ「申し込む」を押してください。</p>
+        <dl class="confirm-list" id="confirm-list"></dl>
+        <p class="alert" id="send-error" role="alert" hidden></p>
+        <div class="btn-row">
+          <button type="button" class="btn btn-ghost" id="back-btn">修正する</button>
+          <button type="button" class="btn btn-primary" id="send-btn">この内容で申し込む</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: 完了 -->
+      <div id="done-view" class="done" hidden>
+        <div class="icon" aria-hidden="true">✓</div>
+        <h2>お申し込み<br>ありがとうございます！</h2>
+        <p style="margin:0">当日お会いできるのを楽しみにしております。</p>
+        <p class="receipt">受付番号　<b id="receipt-no"></b></p>
+        <p class="mail-note">確認メールを <b id="done-email"></b> にお送りしました。<br>届かない場合は迷惑メールフォルダもご確認ください。</p>
+
+        <div class="done-info">
+          <h3>当日のご案内</h3>
+          <ul id="done-notes"></ul>
+        </div>
+
+        <div class="actions">
+          <a class="btn btn-primary" id="gcal-link" target="_blank" rel="noopener">📅 Googleカレンダーに追加</a>
+          <button type="button" class="btn btn-ghost" id="ics-btn">📅 カレンダーアプリに追加</button>
+          <a class="btn btn-ghost js-map-link" target="_blank" rel="noopener">📍 会場の地図を開く</a>
+        </div>
+      </div>
+
+      <!-- 受付終了 -->
+      <div id="closed-view" class="closed" hidden>
+        <h2>受付を終了しました</h2>
+        <p id="closed-message"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  大切な方と一緒に、ぜひ遊びに来てください。
+  <span class="contact" id="contact" hidden></span>
+</footer>
+
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
