@@ -52,6 +52,19 @@
 
     updateTotal();
     loadSeats();
+    watchStickyCta();
+  }
+
+  // 上部の申し込みボタンとフォームがどちらも見えていないときだけ、下部固定ボタンを出す
+  function watchStickyCta() {
+    const sticky = $('#sticky-cta');
+    if (!sticky || !('IntersectionObserver' in window)) return;
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => (en.isIntersecting ? visible.add(en.target) : visible.delete(en.target)));
+      sticky.classList.toggle('is-hidden', visible.size > 0);
+    });
+    [$('.date-card'), $('#apply')].forEach((el) => io.observe(el));
   }
 
   // ---------- 残席 ----------
@@ -422,7 +435,7 @@
     $('#steps').hidden = true;
     $('#closed-message').textContent = message;
     $('#closed-view').hidden = false;
-    $$('.cta').forEach((el) => { el.hidden = true; });
+    $$('.cta, .sticky-cta').forEach((el) => { el.hidden = true; });
   }
 
   function formatDeadline(iso) {

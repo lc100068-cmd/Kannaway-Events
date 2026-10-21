@@ -7,6 +7,11 @@
 <meta name="description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCKにて開催。前回満員御礼、大好評につき再開催決定！">
 <meta property="og:title" content="ロバート・ケリー氏と語ろう会 お申し込み">
 <meta property="og:description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCK。どなた様でも大歓迎！">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lc100068-cmd.github.io/Kannaway-Events/images/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#2e7d32">
+<link rel="preload" as="image" href="images/hero.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
@@ -46,34 +51,76 @@
   .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
 
   /* ---------- hero ---------- */
-  .hero { text-align: center; padding: 40px 0 28px; }
-  .catch { margin: 0; color: var(--green-900); font-size: 15px; letter-spacing: .08em; }
-  .hero h1 {
-    margin: 8px 0 12px; color: var(--green-700);
-    font-size: clamp(32px, 9vw, 48px); line-height: 1.25; letter-spacing: .02em;
+  .hero-visual { max-width: 960px; margin: 0 auto; }
+  .hero-visual h1 { margin: 0; line-height: 0; }
+  .hero-visual img {
+    display: block; width: 100%; height: auto; aspect-ratio: 1024 / 588;
+    /* 写真の下端をページの背景に自然になじませる */
+    -webkit-mask-image: linear-gradient(to bottom, #000 96%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 96%, transparent 100%);
   }
-  .hero h1 small { display: block; font-size: .55em; color: var(--ink); margin-top: 4px; }
-  .ribbon {
-    display: inline-block; margin: 0 0 18px; padding: 6px 18px;
-    background: var(--green-700); color: #fff; border-radius: 999px;
-    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; font-size: 15px;
+  @media (min-width: 960px) {
+    .hero-visual { padding-top: 24px; }
+    .hero-visual img {
+      border-radius: 24px;
+      -webkit-mask-image: none; mask-image: none;
+      box-shadow: 0 10px 40px rgba(31, 77, 43, .18);
+    }
+  }
+
+  .date-card {
+    position: relative; z-index: 1; margin: 6px 0 18px; padding: 18px 16px 20px;
+    background: var(--paper); border-radius: 20px; text-align: center;
+    border: 1px solid var(--line); box-shadow: 0 8px 28px rgba(31, 77, 43, .12);
+  }
+  @media (min-width: 960px) { .date-card { margin-top: 24px; } }
+  .date-card .again {
+    display: inline-block; margin: 0 0 6px; padding: 3px 14px; border-radius: 999px;
+    background: var(--green-100); color: var(--green-900);
+    font: 700 13px "Zen Maru Gothic", sans-serif; letter-spacing: .06em;
   }
   .date {
-    display: flex; align-items: baseline; justify-content: center; gap: 10px;
+    display: flex; align-items: baseline; justify-content: center; gap: 8px;
     color: var(--green-900); font-family: "Zen Maru Gothic", sans-serif; font-weight: 700;
   }
   .date .y { font-size: 18px; }
-  .date .md { font-size: 52px; line-height: 1; letter-spacing: .02em; }
+  .date .md { font-size: clamp(48px, 15vw, 60px); line-height: 1; letter-spacing: .02em; color: var(--green-700); }
   .date .dow {
     font-size: 15px; background: var(--green-700); color: #fff;
-    border-radius: 999px; padding: 4px 10px; transform: translateY(-6px);
+    border-radius: 999px; padding: 4px 10px; transform: translateY(-8px);
   }
-  .lead { margin: 18px auto 0; max-width: 30em; font-size: 15px; color: var(--muted); }
-  .topics { list-style: none; padding: 0; margin: 14px auto 0; max-width: 22em; text-align: left; }
-  .topics li { padding-left: 1.6em; position: relative; font-size: 15px; }
-  .topics li::before { content: "🌿"; position: absolute; left: 0; }
-  .cta { margin-top: 22px; }
-  .deadline-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+  .date-meta { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+  .date-meta b { color: var(--ink); }
+  .cta { margin-top: 16px; }
+  .deadline-note { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+
+  .about { position: relative; overflow: hidden; }
+  .about::after {
+    content: "🌿"; position: absolute; right: -6px; bottom: -14px; font-size: 72px; opacity: .12;
+    transform: rotate(-20deg); pointer-events: none;
+  }
+  .lead { margin: 0 0 12px; font-size: 15px; }
+  .lead strong { color: var(--green-900); background: linear-gradient(transparent 62%, #dcefd2 62%); }
+  .topics { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .topics li {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: var(--green-50); border-radius: 12px; font-weight: 700; font-size: 15px;
+  }
+  .topics .ic {
+    flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--line); font-size: 16px;
+  }
+
+  /* スマホ下部に固定の申し込みボタン（フォームが見えたら隠す） */
+  .sticky-cta {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, rgba(251, 250, 244, .98) 70%, rgba(251, 250, 244, 0));
+    transition: transform .25s, opacity .25s;
+  }
+  .sticky-cta .btn { width: 100%; max-width: 480px; margin: 0 auto; display: flex; }
+  .sticky-cta.is-hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+  @media (min-width: 960px) { .sticky-cta { display: none; } }
 
   /* ---------- buttons ---------- */
   .btn {
@@ -234,30 +281,43 @@
     position: sticky; top: 0; z-index: 10; background: #fff3cd; color: #6b4e00;
     text-align: center; font-size: 13px; padding: 6px 12px; border-bottom: 1px solid #f1dfae;
   }
-  footer { text-align: center; padding: 26px 16px 40px; color: var(--green-900); font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; }
+  footer { text-align: center; padding: 26px 16px 96px; color: var(--green-900); font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; }
   footer .contact { display: block; margin-top: 6px; font-family: "Noto Sans JP", sans-serif; font-weight: 400; font-size: 14px; color: var(--muted); }
 </style>
 </head>
 <body>
 <div class="demo-banner" id="demo-banner" hidden>デモモード：送信しても保存・メール送信はされません（config.js に GAS_URL を設定すると本番になります）</div>
 
+<header class="hero-visual">
+  <h1>
+    <picture>
+      <source srcset="images/hero.webp" type="image/webp">
+      <img src="images/hero.jpg" width="1024" height="588" fetchpriority="high"
+        alt="この人に会えば、人生の見え方が変わる。ロバート・ケリー氏と語ろう 前回満員御礼！大好評につき、再開催決定！ どなた様でも大歓迎！">
+    </picture>
+  </h1>
+</header>
+
 <div class="wrap">
-  <header class="hero">
-    <p class="catch">この人に会えば、人生の見え方が変わる。</p>
-    <h1>ロバート・ケリー氏<small>と語ろう</small></h1>
-    <p class="ribbon">前回満員御礼！ 大好評につき再開催決定</p>
+  <section class="date-card" aria-label="開催日">
+    <p class="again">開催日</p>
     <div class="date" aria-label="2026年11月23日 月曜日 祝日">
       <span class="y">2026</span><span class="md">11.23</span><span class="dow">月・祝</span>
     </div>
-    <p class="lead">日本にAppleコンピュータを導入した5人のうちの1人。<br>時代の変化を見て、動かしてきた人だからこそ語れるお話です。</p>
-    <ul class="topics">
-      <li>これからの時代の捉え方</li>
-      <li>ビジネスや人の心理</li>
-      <li>これからの人生をどう生きるのか</li>
-    </ul>
+    <p class="date-meta"><b>第一部</b> 10:30〜　<b>第二部</b> 13:30〜<br>岡山・レンタルスペース GOODLUCK</p>
     <div class="cta"><a class="btn btn-primary" href="#apply">お申し込みはこちら</a></div>
-    <p class="deadline-note">申込締切：<span class="js-deadline"></span>　どなた様でも大歓迎！</p>
-  </header>
+    <p class="deadline-note">申込締切：<span class="js-deadline"></span></p>
+  </section>
+
+  <section class="card about" aria-labelledby="about-title">
+    <h2 class="section-title" id="about-title">🌱 こんなお話が聞けます</h2>
+    <p class="lead"><strong>日本にAppleコンピュータを導入した5人のうちの1人。</strong>時代の変化を見て、動かしてきた人だからこそ語れるお話です。</p>
+    <ul class="topics">
+      <li><span class="ic" aria-hidden="true">🌿</span>これからの時代の捉え方</li>
+      <li><span class="ic" aria-hidden="true">💡</span>ビジネスや人の心理</li>
+      <li><span class="ic" aria-hidden="true">✨</span>これからの人生をどう生きるのか</li>
+    </ul>
+  </section>
 
   <main>
     <section class="card" aria-labelledby="program-title">
@@ -471,6 +531,10 @@
   大切な方と一緒に、ぜひ遊びに来てください。
   <span class="contact" id="contact" hidden></span>
 </footer>
+
+<div class="sticky-cta is-hidden" id="sticky-cta">
+  <a class="btn btn-primary" href="#apply">11/23 お申し込みはこちら</a>
+</div>
 
 <script src="config.js"></script>
 <script src="app.js"></script>
