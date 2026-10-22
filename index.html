@@ -131,6 +131,60 @@
     content: "🌿"; position: absolute; right: -6px; bottom: -14px; font-size: 72px; opacity: .12;
     transform: rotate(-20deg); pointer-events: none;
   }
+  /* ---------- プレゼント ---------- */
+  .gift {
+    position: relative; overflow: hidden; text-align: center;
+    background: linear-gradient(180deg, #fff8e8 0, #fff 55%); border-color: #eedcae;
+  }
+  .gift-kicker {
+    display: inline-block; margin: 0 0 6px; padding: 2px 14px; border-radius: 999px;
+    background: #fbe7b8; color: #75560f; font: 700 13px "Zen Maru Gothic", sans-serif; letter-spacing: .08em;
+  }
+  .gift-title { margin: 0 0 12px; font-size: clamp(22px, 6.4vw, 28px); line-height: 1.4; color: var(--green-900); }
+  .gift-title em { font-style: normal; color: #b07d10; }
+  .gift-who { list-style: none; padding: 0; margin: 0 auto; display: inline-grid; gap: 6px; text-align: left; }
+  .gift-who li { position: relative; padding-left: 1.6em; font-size: 15px; }
+  .gift-who li::before { content: "🎁"; position: absolute; left: 0; }
+
+  .gift-box {
+    display: block; width: 150px; height: 150px; margin: 14px auto 0; padding: 0;
+    border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .gift-box svg { width: 100%; height: 100%; overflow: visible; }
+  .gift-box .lid { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+  .gift-box.is-peek .lid { transform: translateY(-18px) rotate(-10deg); }
+  .gift-box .peek { opacity: 0; transition: opacity .2s; }
+  .gift-box.is-peek .peek { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .gift-box { animation: gift-wiggle 3.4s ease-in-out infinite; }
+  }
+  @keyframes gift-wiggle {
+    0%, 80%, 100% { transform: rotate(0); }
+    84% { transform: rotate(-6deg); } 88% { transform: rotate(6deg); } 92% { transform: rotate(-3deg); }
+  }
+  .gift-teaser { margin: 6px 0 0; font-size: 15px; }
+  .gift-teaser b { display: block; font: 700 19px "Zen Maru Gothic", sans-serif; color: var(--green-900); }
+  .gift-tap {
+    display: inline-block; margin: 10px 0 0; padding: 4px 14px; border-radius: 999px;
+    background: var(--green-50); color: var(--green-700); font-size: 13px; font-weight: 700; min-height: 1.7em;
+  }
+
+  .gift-revealed .gift-badge {
+    display: inline-block; margin: 14px 0 8px; padding: 3px 14px; border-radius: 999px;
+    background: var(--green-700); color: #fff; font-weight: 700; font-size: 14px;
+  }
+  .gift-revealed img { display: block; width: 100%; height: auto; border-radius: 12px; }
+  .gift-revealed .gift-name { margin: 10px 0 0; font: 700 18px "Zen Maru Gothic", sans-serif; color: var(--green-900); }
+  .gift-revealed .gift-note { margin: 0; color: #b07d10; font-weight: 700; }
+  .gift-revealed .gift-note:empty { display: none; }
+
+  .gift-past { margin: 20px 0 0; padding: 14px; border-radius: 14px; background: #fff; border: 1px dashed #e2cf9c; }
+  .gift-past figcaption { margin: 0 0 10px; font-size: 15px; line-height: 1.6; }
+  .gift-past figcaption span { display: block; font-size: 13px; color: var(--muted); }
+  .gift-past figcaption b { color: #b07d10; font-size: 1.15em; }
+  .gift-past img { display: block; width: 100%; height: auto; border-radius: 10px; }
+  .gift-fine { margin: 12px 0 0; font-size: 12px; color: var(--muted); text-align: left; }
+
   .lead { margin: 0 0 12px; font-size: 15px; }
   .lead strong { color: var(--green-900); background: linear-gradient(transparent 62%, #dcefd2 62%); }
   .topics { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
@@ -345,6 +399,58 @@
     <p class="deadline-note">申込締切：<span class="js-deadline"></span></p>
   </section>
 
+  <section class="card gift" id="gift" aria-labelledby="gift-title">
+    <p class="gift-kicker">参加特典</p>
+    <h2 class="gift-title" id="gift-title">ご参加の方<em>全員に</em><br>プレゼントがあります🎁</h2>
+    <ul class="gift-who">
+      <li><b>当日ご参加</b>の方全員</li>
+      <li><b>新しい方をお連れいただいた会員様</b>全員</li>
+    </ul>
+
+    <!-- 発表前：中身はひみつ -->
+    <div id="gift-mystery">
+      <button type="button" class="gift-box" id="gift-box" aria-label="プレゼントの箱（中身はまだひみつ）">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <g class="peek" fill="#b07d10" font-family="Zen Maru Gothic, sans-serif" font-weight="700">
+            <text x="30" y="30" font-size="16">?</text>
+            <text x="56" y="18" font-size="20">?</text>
+            <text x="84" y="30" font-size="16">?</text>
+          </g>
+          <rect x="18" y="54" width="84" height="56" rx="6" fill="#2e7d32"/>
+          <rect x="54" y="54" width="12" height="56" fill="#e9c46a"/>
+          <circle cx="36" cy="82" r="11" fill="#fff"/>
+          <text x="36" y="89" text-anchor="middle" font-size="18" font-weight="700" fill="#2e7d32" font-family="Zen Maru Gothic, sans-serif">?</text>
+          <g class="lid">
+            <rect x="12" y="40" width="96" height="18" rx="5" fill="#3d8b40"/>
+            <rect x="54" y="40" width="12" height="18" fill="#e9c46a"/>
+            <ellipse cx="48" cy="33" rx="14" ry="8" fill="#e9c46a" transform="rotate(-25 48 33)"/>
+            <ellipse cx="72" cy="33" rx="14" ry="8" fill="#e9c46a" transform="rotate(25 72 33)"/>
+            <circle cx="60" cy="37" r="6" fill="#d4a93e"/>
+          </g>
+        </svg>
+      </button>
+      <p class="gift-teaser"><b>11月のプレゼントは…<br>まだ ひ・み・つ🤫</b>11月上旬に発表予定です。お楽しみに！</p>
+      <p class="gift-tap" id="gift-tap" aria-live="polite">👆 箱をタップしてみてください</p>
+    </div>
+
+    <!-- 発表後：config.js の GIFT を設定すると表示 -->
+    <div class="gift-revealed" id="gift-revealed" hidden>
+      <p class="gift-badge">🎉 11月のプレゼント発表！</p>
+      <img id="gift-img" alt="">
+      <p class="gift-name" id="gift-name"></p>
+      <p class="gift-note" id="gift-note"></p>
+    </div>
+
+    <figure class="gift-past">
+      <figcaption><span>ちなみに…</span>10月のプレゼントは<b>2万円相当</b>の<br>「ハイドロラックス ボディクリーム」でした！</figcaption>
+      <picture>
+        <source srcset="images/gift-oct.webp" type="image/webp">
+        <img src="images/gift-oct.jpg" width="800" height="475" loading="lazy" alt="10月のプレゼント：KANNAWAY ハイドロラックス ボディクリーム（CBD 1,000mg・94mL）">
+      </picture>
+    </figure>
+    <p class="gift-fine">※プレゼントの内容は月ごとに変わります。<br>※新しい方は、フォームの「ご紹介者のお名前」欄に、お連れいただいた会員様のお名前をご記入ください。</p>
+  </section>
+
   <section class="card about" aria-labelledby="about-title">
     <h2 class="section-title" id="about-title">🌱 こんなお話が聞けます</h2>
     <p class="lead"><strong>日本にAppleコンピュータを導入した5人のうちの1人。</strong>時代の変化を見て、動かしてきた人だからこそ語れるお話です。</p>
@@ -497,6 +603,7 @@
         <div class="field">
           <label for="referrer">ご紹介者のお名前 <span class="opt">任意</span></label>
           <input type="text" id="referrer" name="referrer" placeholder="例）岡山 太郎さん" maxlength="50">
+          <p class="hint">会員様のご紹介で来られる方は、その会員様のお名前をご記入ください（ご紹介者様へのプレゼントの確認に使います）。</p>
         </div>
 
         <div class="field">

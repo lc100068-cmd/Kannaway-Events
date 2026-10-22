@@ -37,6 +37,7 @@
       contact.textContent = 'お問い合わせ：' + C.CONTACT;
       contact.hidden = false;
     }
+    initGift();
 
     if (C.DEADLINE && Date.now() > Date.parse(C.DEADLINE)) {
       showClosed('お申し込みの受付期間は終了しました。たくさんのお申し込みありがとうございました。');
@@ -53,6 +54,41 @@
     updateTotal();
     loadSeats();
     watchStickyCta();
+  }
+
+  // ---------- プレゼント ----------
+
+  // config.js の GIFT.revealed が true なら中身を表示、まだなら「ひみつの箱」を表示
+  function initGift() {
+    const g = C.GIFT || {};
+    if (g.revealed && g.name) {
+      $('#gift-mystery').hidden = true;
+      $('#gift-revealed').hidden = false;
+      $('#gift-name').textContent = g.name;
+      $('#gift-note').textContent = g.note || '';
+      const img = $('#gift-img');
+      if (g.image) {
+        img.src = g.image;
+        img.alt = '11月のプレゼント：' + g.name;
+      } else {
+        img.hidden = true;
+      }
+      return;
+    }
+
+    const box = $('#gift-box');
+    const msg = $('#gift-tap');
+    const lines = ['まだ ひ・み・つ です🤫', '発表は11月上旬！', 'ヒント：10月は2万円相当でした✨', '当日のお楽しみに🎁'];
+    let i = 0;
+    let timer;
+    box.addEventListener('click', () => {
+      box.classList.remove('is-peek');
+      void box.offsetWidth; // 連続タップでもアニメーションをやり直す
+      box.classList.add('is-peek');
+      clearTimeout(timer);
+      timer = setTimeout(() => box.classList.remove('is-peek'), 900);
+      msg.textContent = lines[i++ % lines.length];
+    });
   }
 
   // 上部の申し込みボタンとフォームがどちらも見えていないときだけ、下部固定ボタンを出す
@@ -348,6 +384,7 @@
     if (PARTS[d.part].uses.includes('part1')) notes.push('第一部の参加費 1,000円は、当日受付にてお支払いください。');
     if (PARTS[d.part].uses.includes('part2') && d.member === '会員') notes.push('第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
     notes.push('スリッパをご持参いただけると助かります。');
+    notes.push('ご参加の方全員にプレゼントをご用意しています🎁');
 
     const ul = $('#done-notes');
     ul.textContent = '';

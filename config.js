@@ -9,4 +9,13 @@ window.EVENT_CONFIG = {
 
   // お問い合わせ先（任意）。例：'090-0000-0000（担当：山田）'。空なら表示しません。
   CONTACT: '',
+
+  // 11月のプレゼント。決まったら revealed を true にして、中身を入れてください。
+  // false のあいだは「ひみつの箱」が表示されます。
+  GIFT: {
+    revealed: false,
+    name: '',   // 例：'ハイドロラックス ボディクリーム'
+    note: '',   // 例：'2万円相当'
+    image: '',  // 例：'images/gift-nov.webp'（images フォルダに画像を入れる）
+  },
 };
