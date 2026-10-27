@@ -4,26 +4,26 @@
   const C = window.EVENT_CONFIG || {};
   const DEMO = !C.GAS_URL;
 
-  const EVENT_TITLE = 'ロバート・ケリー氏と語ろう会';
+  const EVENT_TITLE = 'キャナウェイジャパン社長ロバート・ケリー氏と「麻」が持つ本当の魅力を学ぶ会';
   const EVENT_DATE = '20261123';
   const DATE_LABEL = '2026年11月23日（月・祝）';
   const VENUE = 'レンタルスペース GOODLUCK';
   const ADDRESS = '〒703-8203 岡山県岡山市中区国府市場331-3';
   const MAP_URL = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('岡山県岡山市中区国府市場331-3');
 
-  // uses: 定員を消費する部 / start・end: カレンダー登録用の時刻（開場〜終了）
-  const PARTS = {
-    both: { label: '第一部・第二部 両方', short: '第一部・第二部', uses: ['part1', 'part2'], start: '12:30', end: '17:30', time: '受付 12:30〜／13:00〜17:30' },
-    part1: { label: '第一部のみ', short: '第一部', uses: ['part1'], start: '12:30', end: '14:30', time: '受付 12:30〜12:50／13:00〜14:30' },
-    part2: { label: '第二部のみ', short: '第二部', uses: ['part2'], start: '14:30', end: '17:30', time: '14:30〜17:30' },
-  };
+  // カレンダー登録用の時刻（受付開始〜終了）
+  const START = '12:30';
+  const END = '17:30';
+  const TIME_LABEL = '受付 12:30〜12:50／13:00〜17:30';
+  // 部の区別はなくなったが、どの版の Apps Script でも受け付けられるよう 'both' を送る
+  const PART_KEY = 'both';
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
   const form = $('#entry-form');
   const views = { 1: form, 2: $('#confirm-view'), 3: $('#done-view') };
-  let seatStatus = null; // { open, remaining: { part1, part2 } }
+  let seatStatus = null; // { open, remaining: { all } }（旧版は { part1, part2 }）
   let pending = null;    // 確認画面に表示中の申込データ
 
   init();
@@ -107,7 +107,7 @@
 
   async function loadSeats() {
     if (DEMO) {
-      applySeats({ ok: true, open: true, remaining: { part1: 4, part2: 25 } });
+      applySeats({ ok: true, open: true, remaining: { all: 25 } });
       return;
     }
     try {
@@ -126,35 +126,22 @@
       showClosed('お申し込みの受付は終了しました。たくさんのお申し込みありがとうございました。');
       return;
     }
-    const r = s.remaining;
-    if (r.part1 <= 0 && r.part2 <= 0) {
-      showClosed('おかげさまで満席となりました。たくさんのお申し込みありがとうございました。');
+    const left = remaining();
+    if (left <= 0) {
+      showClosed('おかげさまで定員に達したため、受付を終了しました。たくさんのお申し込みありがとうございました。');
       return;
     }
 
     $$('.seat-badge').forEach((el) => {
-      const left = r[el.dataset.seat];
       el.textContent = seatText(left, '残り');
-      el.classList.toggle('few', left > 0 && left <= 5);
-      el.classList.toggle('full', left <= 0);
-    });
-
-    Object.keys(PARTS).forEach((key) => {
-      const left = partRemaining(key);
-      const input = form.querySelector(`input[name="part"][value="${key}"]`);
-      const choice = input.closest('.choice');
-      const seat = $('.seat', choice);
-      input.disabled = left <= 0;
-      if (input.disabled) input.checked = false;
-      choice.classList.toggle('is-full', left <= 0);
-      seat.textContent = seatText(left, '残り');
-      seat.classList.toggle('few', left > 0 && left <= 5);
+      el.classList.toggle('few', left <= 5);
     });
   }
 
-  function partRemaining(key) {
+  function remaining() {
     if (!seatStatus) return Infinity;
-    return Math.min(...PARTS[key].uses.map((p) => seatStatus.remaining[p]));
+    const r = seatStatus.remaining;
+    return r.all != null ? r.all : Math.min(r.part1, r.part2);
   }
 
   function seatText(left, prefix) {
@@ -170,7 +157,6 @@
     updateMemberNotice();
     const name = e.target.name;
     if (name) clearError(name);
-    if (name === 'companions') clearError('part'); // 人数を変えたら残席エラーも消す
   }
 
   function updateTotal() {
@@ -178,15 +164,10 @@
   }
 
   function updateMemberNotice() {
-    const part = radioValue('part');
     const member = radioValue('member');
-    let text = '';
-    if (member === '会員' && (part === 'part2' || part === 'both')) {
-      text = '第二部は、会員様のみ会場協力費として1,000円をお預かりいたします。';
-    } else if (member === '非会員' && (part === 'part2' || part === 'both')) {
-      text = '第二部は無料でご参加いただけます。';
-    }
-    $('#member-notice').textContent = text;
+    $('#member-notice').textContent = member === '会員'
+      ? '会員様は、参加費1,000円に加えて会場協力費1,000円を追加でお預かりいたします。'
+      : '';
   }
 
   function radioValue(name) {
@@ -209,7 +190,7 @@
       kana: v('kana'),
       phone: toHalfWidth(v('phone')),
       email: toHalfWidth(v('email')),
-      part: radioValue('part'),
+      part: PART_KEY,
       companions: Number(form.companions.value || 0),
       member: radioValue('member'),
       referrer: v('referrer'),
@@ -233,12 +214,9 @@
     if (!d.email) errs.email = 'メールアドレスを入力してください';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) errs.email = 'メールアドレスの形式が正しくありません';
 
-    if (!d.part) errs.part = '参加する部を選んでください';
-    else {
-      const left = partRemaining(d.part);
-      if (d.companions + 1 > left) {
-        errs.part = `選択した部の残席は${left}席です。人数か参加する部をご確認ください`;
-      }
+    const left = remaining();
+    if (d.companions + 1 > left) {
+      errs.companions = `残りのお席は${left}席です。人数をご確認ください`;
     }
 
     if (!d.member) errs.member = '会員か非会員かを選んでください';
@@ -283,7 +261,7 @@
     e.preventDefault();
     const data = collect();
     $$('.err', form).forEach((el) => { el.textContent = ''; });
-    ['name', 'kana', 'phone', 'email', 'part', 'member'].forEach((n) => setInvalid(n, false));
+    ['name', 'kana', 'phone', 'email', 'companions', 'member'].forEach((n) => setInvalid(n, false));
 
     const errs = validate(data);
     if (Object.keys(errs).length) {
@@ -302,7 +280,7 @@
       ['ふりがな', d.kana],
       ['電話番号', d.phone],
       ['メール', d.email],
-      ['参加する部', `${PARTS[d.part].label}\n${PARTS[d.part].time}`],
+      ['日時', `${DATE_LABEL}\n${TIME_LABEL}`],
       ['人数', d.companions ? `${d.companions + 1}名（ご本人＋${d.companions}名）` : '1名（ご本人のみ）'],
       ['会員区分', d.member],
       ['ご紹介者', d.referrer || '—'],
@@ -354,7 +332,7 @@
         if (result.code === 'full') {
           if (result.remaining) applySeats({ ok: true, open: true, remaining: result.remaining });
           showStep(1);
-          showErrors({ part: result.message });
+          showErrors({ companions: result.message });
           return;
         }
         throw new Error(result.message || '送信できませんでした。');
@@ -378,11 +356,11 @@
     $('#done-email').textContent = d.email;
 
     const notes = [
-      `日時：${DATE_LABEL} ${PARTS[d.part].time}`,
+      `日時：${DATE_LABEL} ${TIME_LABEL}`,
       `会場：${VENUE}（${ADDRESS}）`,
+      '参加費 1,000円は、当日受付にてお支払いください。',
     ];
-    if (PARTS[d.part].uses.includes('part1')) notes.push('第一部の参加費 1,000円は、当日受付にてお支払いください。');
-    if (PARTS[d.part].uses.includes('part2') && d.member === '会員') notes.push('第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
+    if (d.member === '会員') notes.push('会員様は、会場協力費 1,000円を追加でお預かりいたします。');
     notes.push('スリッパをご持参いただけると助かります。');
     notes.push('ご参加の方全員にプレゼントをご用意しています🎁');
 
@@ -394,33 +372,30 @@
       ul.append(li);
     });
 
-    $('#gcal-link').href = googleCalendarUrl(d.part);
+    $('#gcal-link').href = googleCalendarUrl();
     form.reset();
     updateTotal();
     showStep(3);
   }
 
-  function calendarDetails(partKey) {
-    return `${EVENT_TITLE}（${PARTS[partKey].short}）\n${PARTS[partKey].time}\n会場：${VENUE}\n${ADDRESS}`;
+  function calendarDetails() {
+    return `${EVENT_TITLE}\n${TIME_LABEL}\n会場：${VENUE}\n${ADDRESS}`;
   }
 
-  function googleCalendarUrl(partKey) {
-    const p = PARTS[partKey];
+  function googleCalendarUrl() {
     const hm = (t) => t.replace(':', '') + '00';
     const params = new URLSearchParams({
       action: 'TEMPLATE',
-      text: `${EVENT_TITLE}（${p.short}）`,
-      dates: `${EVENT_DATE}T${hm(p.start)}/${EVENT_DATE}T${hm(p.end)}`,
+      text: EVENT_TITLE,
+      dates: `${EVENT_DATE}T${hm(START)}/${EVENT_DATE}T${hm(END)}`,
       ctz: 'Asia/Tokyo',
       location: `${VENUE} ${ADDRESS}`,
-      details: calendarDetails(partKey),
+      details: calendarDetails(),
     });
     return 'https://calendar.google.com/calendar/render?' + params.toString();
   }
 
   function downloadIcs() {
-    const partKey = (pending && pending.part) || 'both';
-    const p = PARTS[partKey];
     // 日本時間 → UTC（-9時間）
     const utc = (t) => {
       const [h, m] = t.split(':').map(Number);
@@ -434,13 +409,13 @@
       'PRODID:-//Kannaway Events//JA',
       'CALSCALE:GREGORIAN',
       'BEGIN:VEVENT',
-      `UID:${Date.now()}-${partKey}@kannaway-events`,
+      `UID:${Date.now()}@kannaway-events`,
       `DTSTAMP:${stamp}`,
-      `DTSTART:${utc(p.start)}`,
-      `DTEND:${utc(p.end)}`,
-      `SUMMARY:${esc(`${EVENT_TITLE}（${p.short}）`)}`,
+      `DTSTART:${utc(START)}`,
+      `DTEND:${utc(END)}`,
+      `SUMMARY:${esc(EVENT_TITLE)}`,
       `LOCATION:${esc(`${VENUE} ${ADDRESS}`)}`,
-      `DESCRIPTION:${esc(calendarDetails(partKey))}`,
+      `DESCRIPTION:${esc(calendarDetails())}`,
       'END:VEVENT',
       'END:VCALENDAR',
     ].join('\r\n');
@@ -470,6 +445,7 @@
   function showClosed(message) {
     Object.values(views).forEach((el) => { el.hidden = true; });
     $('#steps').hidden = true;
+    $('.form-lead').hidden = true;
     $('#closed-message').textContent = message;
     $('#closed-view').hidden = false;
     $$('.cta, .sticky-cta').forEach((el) => { el.hidden = true; });

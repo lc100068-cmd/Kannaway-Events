@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ロバート・ケリー氏と語ろう会 お申し込み</title>
-<meta name="description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCKにて開催。前回満員御礼、大好評につき再開催決定！">
-<meta property="og:title" content="ロバート・ケリー氏と語ろう会 お申し込み">
+<title>キャナウェイジャパン社長ロバート・ケリー氏と「麻」が持つ本当の魅力を学ぶ会｜お申し込み</title>
+<meta name="description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCKにて開催。定員40名。前回満員御礼、大好評につき再開催決定！">
+<meta property="og:title" content="キャナウェイジャパン社長ロバート・ケリー氏と「麻」が持つ本当の魅力を学ぶ会｜お申し込み">
 <meta property="og:description" content="2026年11月23日（月・祝）岡山・レンタルスペースGOODLUCK。どなた様でも大歓迎！">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://lc100068-cmd.github.io/Kannaway-Events/images/hero-mobile-v3.png">
@@ -124,7 +124,18 @@
   .date-meta { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
   .date-meta b { color: var(--ink); }
   .cta { margin-top: 16px; }
-  .deadline-note { margin: 8px 0 0; font-size: 13px; color: var(--muted); }
+  .date-card .seat-badge { margin-top: 12px; font-size: 14px; }
+  .deadline-box {
+    margin: 14px 0 0; padding: 12px 14px; border-radius: 12px; text-align: left;
+    background: #fff8e8; border: 1px solid #eedcae; font-size: 14px;
+  }
+  .deadline-box p { margin: 0; }
+  .deadline-box .head { font-weight: 700; color: #75560f; margin-bottom: 2px; }
+  .deadline-box b { color: var(--ink); }
+  .nw { white-space: nowrap; }
+  .deadline-box .small { margin-top: 6px; font-size: 13px; color: var(--muted); }
+  .form-lead { margin: -6px 0 16px; text-align: center; font-size: 14px; color: var(--muted); }
+  .form-lead b { color: var(--ink); }
 
   .about { position: relative; overflow: hidden; }
   .about::after {
@@ -232,14 +243,13 @@
     display: flex; align-items: center; gap: 8px; margin: 0 0 14px;
     color: var(--green-900); font-size: 20px;
   }
-  .parts { display: grid; gap: 14px; }
-  @media (min-width: 560px) { .parts { grid-template-columns: 1fr 1fr; } }
   .part { margin: 0; }
   .part .tag {
     display: inline-block; background: var(--green-100); color: var(--green-900);
     font: 700 14px "Zen Maru Gothic", sans-serif; padding: 2px 14px; border-radius: 999px;
   }
-  .part h3 { margin: 8px 0 6px; font-size: 19px; line-height: 1.4; color: var(--ink); }
+  .part h3 { margin: 8px 0 6px; font-size: 19px; line-height: 1.5; color: var(--ink); }
+  .part h3 .em { color: var(--green-700); }
   .part h3 small { display: block; font-size: 14px; color: var(--muted); font-weight: 500; }
   .part dl { margin: 8px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 15px; }
   .part dt { color: var(--muted); }
@@ -394,9 +404,14 @@
     <div class="date" aria-label="2026年11月23日 月曜日 祝日">
       <span class="y">2026</span><span class="md">11.23</span><span class="dow">月・祝</span>
     </div>
-    <p class="date-meta"><b>第一部</b> 13:00〜（受付 12:30〜）　<b>第二部</b> 14:30〜<br>岡山・レンタルスペース GOODLUCK</p>
+    <p class="date-meta"><b>13:00〜17:30</b>（受付 12:30〜12:50）<br>岡山・レンタルスペース GOODLUCK</p>
+    <span class="seat-badge" data-seat="all"></span>
     <div class="cta"><a class="btn btn-primary" href="#apply">お申し込みはこちら</a></div>
-    <p class="deadline-note">申込締切：<span class="js-deadline"></span></p>
+    <div class="deadline-box">
+      <p class="head">⏰ 申込締切</p>
+      <p><b><span class="js-deadline"></span>まで</b>、または<b class="nw">定員40名</b>に達した時点で受付終了となります。</p>
+      <p class="small">定員になり次第、締切日前でも受付を終了いたしますので、参加をご希望の方はお早めにお申し込みください。</p>
+    </div>
   </section>
 
   <section class="card gift" id="gift" aria-labelledby="gift-title">
@@ -464,29 +479,16 @@
   <main>
     <section class="card" aria-labelledby="program-title">
       <h2 class="section-title" id="program-title">🍃 プログラム</h2>
-      <div class="parts">
-        <article class="part">
-          <span class="tag">第一部</span>
-          <h3>ロバート・ケリー氏と語ろう会</h3>
-          <dl>
-            <dt>受付</dt><dd>12:30〜12:50</dd>
-            <dt>時間</dt><dd>13:00〜14:30</dd>
-            <dt>参加費</dt><dd>1,000円</dd>
-          </dl>
-          <p class="sub">これからの時代やビジネス、人の心について直接聞ける貴重な時間！</p>
-          <span class="seat-badge" data-seat="part1">残席を確認中…</span>
-        </article>
-        <article class="part">
-          <span class="tag">第二部</span>
-          <h3>「麻」が持つ本当の魅力<small>キャナウェイ説明会</small></h3>
-          <dl>
-            <dt>時間</dt><dd>14:30〜17:30</dd>
-            <dt>参加費</dt><dd>無料</dd>
-          </dl>
-          <p class="sub">※会員様のみ会場協力費として1,000円お預かりいたします。</p>
-          <span class="seat-badge" data-seat="part2">残席を確認中…</span>
-        </article>
-      </div>
+      <article class="part">
+        <h3>キャナウェイジャパン社長<br><span class="em">ロバート・ケリー氏</span>と<br>「麻」が持つ本当の魅力を学ぶ会</h3>
+        <dl>
+          <dt>受付</dt><dd>12:30〜12:50</dd>
+          <dt>時間</dt><dd>13:00〜17:30</dd>
+          <dt>参加費</dt><dd>1,000円</dd>
+        </dl>
+        <p class="sub">※会員様のみ会場協力費として1,000円を追加でお預かりいたします。</p>
+        <span class="seat-badge" data-seat="all">残席を確認中…</span>
+      </article>
     </section>
 
     <section class="card venue" aria-labelledby="venue-title">
@@ -509,6 +511,7 @@
         <li data-step="2"><span class="num">2</span>確認</li>
         <li data-step="3"><span class="num">3</span>完了</li>
       </ol>
+      <p class="form-lead">定員<b>40名</b>／締切 <b><span class="js-deadline"></span></b>（定員になり次第終了）</p>
 
       <!-- STEP 1: 入力 -->
       <form id="entry-form" novalidate>
@@ -537,37 +540,6 @@
           <p class="hint">お申し込み確認メールをお送りします。</p>
           <p class="err" data-err="email"></p>
         </div>
-
-        <fieldset class="field" id="part-field">
-          <legend>参加する部 <span class="req">必須</span></legend>
-          <div class="choices">
-            <label class="choice">
-              <input type="radio" name="part" value="both">
-              <span class="choice-body">
-                <strong>第一部・第二部 両方</strong>
-                <small>受付 12:30〜／13:00〜17:30</small>
-                <em class="seat"></em>
-              </span>
-            </label>
-            <label class="choice">
-              <input type="radio" name="part" value="part1">
-              <span class="choice-body">
-                <strong>第一部のみ（ロバート・ケリー氏と語ろう会）</strong>
-                <small>受付 12:30〜12:50／13:00〜14:30　参加費 1,000円</small>
-                <em class="seat"></em>
-              </span>
-            </label>
-            <label class="choice">
-              <input type="radio" name="part" value="part2">
-              <span class="choice-body">
-                <strong>第二部のみ（キャナウェイ説明会）</strong>
-                <small>14:30〜17:30　参加費 無料</small>
-                <em class="seat"></em>
-              </span>
-            </label>
-          </div>
-          <p class="err" data-err="part"></p>
-        </fieldset>
 
         <div class="field">
           <label for="companions">一緒に来られる方の人数 <span class="req">必須</span></label>

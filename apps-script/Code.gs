@@ -1,18 +1,18 @@
 /**
- * ロバート・ケリー氏と語ろう会 お申し込み受付スクリプト
+ * キャナウェイジャパン社長ロバート・ケリー氏と「麻」が持つ本当の魅力を学ぶ会 お申し込み受付スクリプト
  *
  * Google スプレッドシートの「拡張機能 → Apps Script」に貼り付けて使います。
  * 設定を変えるときは CONFIG だけを書き換えてください。
  */
 const CONFIG = {
-  // 定員（同伴者を含む人数）
-  CAPACITY: { part1: 40, part2: 40 },
+  // 定員（同伴者を含む合計人数）
+  CAPACITY: 40,
   // 申込締切（日本時間）。config.js の DEADLINE と同じにしてください。
   DEADLINE: '2026-11-18T23:59:59+09:00',
   // 申し込みがあったときに通知を受け取るメールアドレス（空なら通知しない）
   ORGANIZER_EMAIL: '',
   // 確認メールの差出人名
-  SENDER_NAME: 'ロバート・ケリー氏と語ろう会 事務局',
+  SENDER_NAME: 'ロバート・ケリー氏と学ぶ会 事務局',
   // 確認メールの末尾に載せるお問い合わせ先（空なら載せない）
   CONTACT: '',
   // 申込一覧を書き込むシート名
@@ -20,23 +20,16 @@ const CONFIG = {
 };
 
 const EVENT = {
-  title: 'ロバート・ケリー氏と語ろう会',
+  title: 'キャナウェイジャパン社長ロバート・ケリー氏と「麻」が持つ本当の魅力を学ぶ会',
+  timeLabel: '受付 12:30〜12:50／13:00〜17:30',
   dateLabel: '2026年11月23日（月・祝）',
   venue: 'レンタルスペース GOODLUCK',
   address: '〒703-8203 岡山県岡山市中区国府市場331-3',
   mapUrl: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('岡山県岡山市中区国府市場331-3'),
 };
 
-const PARTS = {
-  both: { label: '第一部・第二部 両方', uses: ['part1', 'part2'] },
-  part1: { label: '第一部のみ', uses: ['part1'] },
-  part2: { label: '第二部のみ', uses: ['part2'] },
-};
-
-const PART_DETAIL = {
-  part1: '第一部「ロバート・ケリー氏と語ろう会」　受付 12:30〜12:50／13:00〜14:30',
-  part2: '第二部「「麻」が持つ本当の魅力 キャナウェイ説明会」　14:30〜17:30',
-};
+// 「参加する部」列に書き込む値（部の区別はなくなったので一律）
+const ENTRY_LABEL = '参加';
 
 const HEADERS = [
   '受付日時', '受付番号', 'お名前', 'ふりがな', '電話番号', 'メールアドレス',
@@ -86,18 +79,16 @@ function doPost(e) {
   try {
     const sheet = getSheet_();
     const status = status_(sheet);
-    for (const p of PARTS[entry.part].uses) {
-      if (entry.total > status.remaining[p]) {
-        const left = Math.min(...PARTS[entry.part].uses.map((u) => status.remaining[u]));
-        return json_({
-          ok: false,
-          code: 'full',
-          message: left > 0
-            ? `申し訳ありません。選択した部の残席は${left}席です。人数か参加する部をご確認ください。`
-            : '申し訳ありません。選択した部は満席になりました。',
-          remaining: status.remaining,
-        });
-      }
+    const left = status.remaining.all;
+    if (entry.total > left) {
+      return json_({
+        ok: false,
+        code: left > 0 ? 'full' : 'closed',
+        message: left > 0
+          ? `申し訳ありません。残りのお席は${left}席です。人数をご確認ください。`
+          : '申し訳ありません。定員に達したため、受付を終了しました。',
+        remaining: status.remaining,
+      });
     }
 
     const props = PropertiesService.getScriptProperties();
@@ -112,7 +103,7 @@ function doPost(e) {
       safe_(entry.kana),
       entry.phone,
       safe_(entry.email),
-      PARTS[entry.part].label,
+      ENTRY_LABEL,
       String(entry.companions),
       String(entry.total),
       entry.member,
@@ -153,26 +144,26 @@ function getSheet_() {
 }
 
 function status_(sheet) {
-  const used = { part1: 0, part2: 0 };
-  const labelToKey = {};
-  Object.keys(PARTS).forEach((k) => { labelToKey[PARTS[k].label] = k; });
-
+  // 以前の「第一部／第二部」形式の行も含め、キャンセル以外の合計人数を数える
+  let used = 0;
   const last = sheet.getLastRow();
   if (last >= 2) {
     sheet.getRange(2, 1, last - 1, HEADERS.length).getValues().forEach((r) => {
       if (String(r[COL.cancel]).trim()) return;
-      const key = labelToKey[r[COL.part]];
-      if (!key) return;
-      const n = Number(r[COL.total]) || 1;
-      PARTS[key].uses.forEach((p) => { used[p] += n; });
+      if (!String(r[COL.part]).trim()) return;
+      used += Number(r[COL.total]) || 1;
     });
   }
 
-  const remaining = {};
-  Object.keys(CONFIG.CAPACITY).forEach((p) => {
-    remaining[p] = Math.max(0, CONFIG.CAPACITY[p] - used[p]);
-  });
-  return { ok: true, open: !isClosed_(), deadline: CONFIG.DEADLINE, remaining: remaining };
+  const left = Math.max(0, capacity_() - used);
+  // part1・part2 は以前の版のフォーム向け（中身は同じ値）
+  return { ok: true, open: !isClosed_(), deadline: CONFIG.DEADLINE, remaining: { all: left, part1: left, part2: left } };
+}
+
+// 以前の { part1: 40, part2: 40 } 形式の設定でも動くようにする
+function capacity_() {
+  const c = CONFIG.CAPACITY;
+  return typeof c === 'number' ? c : Math.min.apply(null, Object.keys(c).map((k) => c[k]));
 }
 
 function isClosed_() {
@@ -186,7 +177,6 @@ function validate_(d) {
     kana: s(d.kana, 50),
     phone: s(d.phone, 20),
     email: s(d.email, 100),
-    part: s(d.part, 10),
     companions: parseInt(d.companions, 10),
     member: s(d.member, 10),
     referrer: s(d.referrer, 50),
@@ -200,7 +190,6 @@ function validate_(d) {
     return { error: '電話番号を正しく入力してください。' };
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(entry.email)) return { error: 'メールアドレスを正しく入力してください。' };
-  if (!PARTS[entry.part]) return { error: '参加する部を選んでください。' };
   if (!(entry.companions >= 0 && entry.companions <= 5)) return { error: '同伴者の人数を選んでください。' };
   if (['会員', '非会員'].indexOf(entry.member) < 0) return { error: '会員区分を選んでください。' };
   entry.total = entry.companions + 1;
@@ -217,12 +206,11 @@ function json_(obj) {
 }
 
 function entryLines_(entry) {
-  const uses = PARTS[entry.part].uses;
   const lines = [
     '■ 日時',
     EVENT.dateLabel,
+    EVENT.timeLabel,
   ];
-  uses.forEach((p) => lines.push(PART_DETAIL[p]));
   lines.push(
     '',
     '■ 会場',
@@ -233,7 +221,6 @@ function entryLines_(entry) {
     '■ お申し込み内容',
     'お名前：' + entry.name + '（' + entry.kana + '）',
     '電話番号：' + entry.phone,
-    '参加する部：' + PARTS[entry.part].label,
     '人数：' + entry.total + '名' + (entry.companions ? '（ご本人＋' + entry.companions + '名）' : ''),
     '会員区分：' + entry.member,
     'ご紹介者：' + (entry.referrer || '—'),
@@ -242,8 +229,8 @@ function entryLines_(entry) {
   );
 
   const notes = [];
-  if (uses.indexOf('part1') >= 0) notes.push('・第一部の参加費 1,000円は、当日受付にてお支払いください。');
-  if (uses.indexOf('part2') >= 0 && entry.member === '会員') notes.push('・第二部は、会員様のみ会場協力費 1,000円をお預かりいたします。');
+  notes.push('・参加費 1,000円は、当日受付にてお支払いください。');
+  if (entry.member === '会員') notes.push('・会員様は、会場協力費 1,000円を追加でお預かりいたします。');
   notes.push('・スリッパをご持参いただけると助かります。');
   if (notes.length) lines.push('', '■ 当日のご案内', ...notes);
   return lines;
@@ -286,10 +273,9 @@ function notifyOrganizer_(entry, receiptNo) {
   ].concat(entryLines_(entry), [
     '',
     '■ 現在の残席',
-    '第一部：' + status.remaining.part1 + '席',
-    '第二部：' + status.remaining.part2 + '席',
+    '残り ' + status.remaining.all + '席（定員 ' + capacity_() + '名）',
     '',
     '申込一覧：' + SpreadsheetApp.getActiveSpreadsheet().getUrl(),
   ]);
-  MailApp.sendEmail(CONFIG.ORGANIZER_EMAIL, '【新規申込 ' + receiptNo + '】' + entry.name + ' 様（' + PARTS[entry.part].label + '・' + entry.total + '名）', body.join('\n'), { name: CONFIG.SENDER_NAME });
+  MailApp.sendEmail(CONFIG.ORGANIZER_EMAIL, '【新規申込 ' + receiptNo + '】' + entry.name + ' 様（' + entry.total + '名）', body.join('\n'), { name: CONFIG.SENDER_NAME });
 }
