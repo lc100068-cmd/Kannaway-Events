@@ -37,7 +37,6 @@
       contact.textContent = 'お問い合わせ：' + C.CONTACT;
       contact.hidden = false;
     }
-    initGift();
 
     if (C.DEADLINE && Date.now() > Date.parse(C.DEADLINE)) {
       showClosed('お申し込みの受付期間は終了しました。たくさんのお申し込みありがとうございました。');
@@ -54,41 +53,6 @@
     updateTotal();
     loadSeats();
     watchStickyCta();
-  }
-
-  // ---------- プレゼント ----------
-
-  // config.js の GIFT.revealed が true なら中身を表示、まだなら「ひみつの箱」を表示
-  function initGift() {
-    const g = C.GIFT || {};
-    if (g.revealed && g.name) {
-      $('#gift-mystery').hidden = true;
-      $('#gift-revealed').hidden = false;
-      $('#gift-name').textContent = g.name;
-      $('#gift-note').textContent = g.note || '';
-      const img = $('#gift-img');
-      if (g.image) {
-        img.src = g.image;
-        img.alt = '11月のプレゼント：' + g.name;
-      } else {
-        img.hidden = true;
-      }
-      return;
-    }
-
-    const box = $('#gift-box');
-    const msg = $('#gift-tap');
-    const lines = ['まだ ひ・み・つ です🤫', '発表は11月上旬！', 'ヒント：10月は2万円相当でした✨', '当日のお楽しみに🎁'];
-    let i = 0;
-    let timer;
-    box.addEventListener('click', () => {
-      box.classList.remove('is-peek');
-      void box.offsetWidth; // 連続タップでもアニメーションをやり直す
-      box.classList.add('is-peek');
-      clearTimeout(timer);
-      timer = setTimeout(() => box.classList.remove('is-peek'), 900);
-      msg.textContent = lines[i++ % lines.length];
-    });
   }
 
   // 上部の申し込みボタンとフォームがどちらも見えていないときだけ、下部固定ボタンを出す
@@ -153,14 +117,47 @@
   // ---------- 入力 ----------
 
   function onInput(e) {
-    updateTotal();
-    updateMemberNotice();
     const name = e.target.name;
-    if (name) clearError(name);
+    // 名前欄の再描画は人数を変えたときだけ（名前欄の change から再描画すると、消している最中の欄をもう一度消してしまう）
+    if (name === 'companions') updateTotal();
+    updateMemberNotice();
+    if (!name) return;
+    if (name.startsWith('companionName')) {
+      e.target.setAttribute('aria-invalid', 'false');
+      $('[data-err="companionNames"]').textContent = '';
+    } else {
+      clearError(name);
+    }
   }
 
   function updateTotal() {
-    $('#total-count').textContent = String(Number(form.companions.value || 0) + 1);
+    const n = Number(form.companions.value || 0);
+    $('#total-count').textContent = String(n + 1);
+    renderCompanionInputs(n);
+  }
+
+  // 同伴者の人数ぶん、お名前の入力欄を出す（入力済みのお名前は残す）
+  function renderCompanionInputs(n) {
+    const list = $('#companion-list');
+    $('#companion-names').hidden = n === 0;
+    while (list.children.length > n) list.lastElementChild.remove();
+    for (let i = list.children.length + 1; i <= n; i++) {
+      const row = document.createElement('div');
+      const label = document.createElement('label');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.id = input.name = 'companionName' + i;
+      input.maxLength = 50;
+      input.placeholder = '例）岡山 花子';
+      label.htmlFor = input.id;
+      label.textContent = `${i}人目のお名前`;
+      row.append(label, input);
+      list.append(row);
+    }
+  }
+
+  function companionNames() {
+    return $$('#companion-list input').map((el) => el.value.trim());
   }
 
   function updateMemberNotice() {
@@ -193,6 +190,7 @@
       part: PART_KEY,
       companions: Number(form.companions.value || 0),
       member: radioValue('member'),
+      companionNames: companionNames(),
       referrer: v('referrer'),
       message: v('message'),
       nextInfo: form.elements.nextInfo.checked,
@@ -214,6 +212,10 @@
     if (!d.email) errs.email = 'メールアドレスを入力してください';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) errs.email = 'メールアドレスの形式が正しくありません';
 
+    if (d.companionNames.some((n) => !n)) {
+      errs.companionNames = '一緒に来られる方全員のお名前をご記入ください';
+    }
+
     const left = remaining();
     if (d.companions + 1 > left) {
       errs.companions = `残りのお席は${left}席です。人数をご確認ください`;
@@ -223,14 +225,30 @@
     return errs;
   }
 
+  // 同伴者のお名前はメッセージ欄の先頭にも入れて送る（スプレッドシートで確認しやすくするため）
+  function toPayload(d) {
+    if (!d.companions) return d;
+    const head = '【一緒に来られる方】' + d.companionNames.join('、');
+    return { ...d, message: d.message ? head + '\n' + d.message : head };
+  }
+
   function showErrors(errs) {
     let first = null;
-    Object.keys(errs).forEach((name) => {
+    const emptyNames = errs.companionNames ? $$('#companion-list input').filter((el) => !el.value.trim()) : [];
+    if (errs.companionNames) {
+      $('[data-err="companionNames"]').textContent = errs.companionNames;
+      emptyNames.forEach((el) => el.setAttribute('aria-invalid', 'true'));
+    }
+    Object.keys(errs).filter((k) => k !== 'companionNames').forEach((name) => {
       const el = $(`[data-err="${name}"]`);
       if (el) el.textContent = errs[name];
       setInvalid(name, true);
       if (!first) first = name;
     });
+    if (!first && emptyNames.length) {
+      emptyNames[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => emptyNames[0].focus({ preventScroll: true }), 300);
+    }
     if (first) {
       const target = form.elements[first];
       const node = target instanceof RadioNodeList ? target[0] : target;
@@ -282,6 +300,7 @@
       ['メール', d.email],
       ['日時', `${DATE_LABEL}\n${TIME_LABEL}`],
       ['人数', d.companions ? `${d.companions + 1}名（ご本人＋${d.companions}名）` : '1名（ご本人のみ）'],
+      ...(d.companions ? [['一緒に来られる方', d.companionNames.join('\n')]] : []),
       ['会員区分', d.member],
       ['ご紹介者', d.referrer || '—'],
       ['メッセージ', d.message || '—'],
@@ -319,7 +338,7 @@
           method: 'POST',
           // text/plain にすることで Apps Script へのCORSプリフライトを避ける
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(pending),
+          body: JSON.stringify(toPayload(pending)),
         });
         result = await res.json();
       }
@@ -362,7 +381,6 @@
     ];
     if (d.member === '会員') notes.push('会員様は、会場協力費 1,000円を追加でお預かりいたします。');
     notes.push('スリッパをご持参いただけると助かります。');
-    notes.push('ご参加の方全員にプレゼントをご用意しています🎁');
 
     const ul = $('#done-notes');
     ul.textContent = '';

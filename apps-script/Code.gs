@@ -182,6 +182,7 @@ function validate_(d) {
     referrer: s(d.referrer, 50),
     message: s(d.message, 1000),
     nextInfo: d.nextInfo === true,
+    companionNames: (Array.isArray(d.companionNames) ? d.companionNames : []).map((n) => s(n, 50)).filter(Boolean),
   };
   if (!entry.name) return { error: 'お名前を入力してください。' };
   if (!entry.kana) return { error: 'ふりがなを入力してください。' };
@@ -191,6 +192,8 @@ function validate_(d) {
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(entry.email)) return { error: 'メールアドレスを正しく入力してください。' };
   if (!(entry.companions >= 0 && entry.companions <= 5)) return { error: '同伴者の人数を選んでください。' };
+  // お名前のない同伴者の席は確保しない（枠だけ先に取られるのを防ぐ）
+  if (entry.companionNames.length < entry.companions) return { error: '一緒に来られる方全員のお名前をご記入ください。' };
   if (['会員', '非会員'].indexOf(entry.member) < 0) return { error: '会員区分を選んでください。' };
   entry.total = entry.companions + 1;
   return { entry: entry };
@@ -222,6 +225,7 @@ function entryLines_(entry) {
     'お名前：' + entry.name + '（' + entry.kana + '）',
     '電話番号：' + entry.phone,
     '人数：' + entry.total + '名' + (entry.companions ? '（ご本人＋' + entry.companions + '名）' : ''),
+    ...(entry.companions ? ['一緒に来られる方：' + entry.companionNames.join('、')] : []),
     '会員区分：' + entry.member,
     'ご紹介者：' + (entry.referrer || '—'),
     '次回のご案内：' + (entry.nextInfo ? '希望する' : '希望しない'),
