@@ -106,6 +106,13 @@
     border: 1px solid var(--line); box-shadow: 0 8px 28px rgba(31, 77, 43, .12);
   }
   @media (min-width: 960px) { .date-card { margin-top: 24px; } }
+  .extra-seats {
+    margin: 0 0 16px; padding: 12px 14px; border-radius: 14px;
+    background: #fff4e5; border: 2px solid #f2b866; text-align: center;
+  }
+  .extra-seats .head { margin: 0; font: 700 20px "Zen Maru Gothic", sans-serif; color: var(--warn); }
+  .extra-seats p { margin: 4px 0 0; font-size: 14px; }
+  .extra-seats b { color: var(--warn); font-size: 1.1em; }
   .date-card .again {
     display: inline-block; margin: 0 0 6px; padding: 3px 14px; border-radius: 999px;
     background: var(--green-100); color: var(--green-900);
@@ -352,6 +359,10 @@
 
 <div class="wrap">
   <section class="date-card" aria-label="開催日">
+    <div class="extra-seats">
+      <p class="head">🎉 満席御礼！</p>
+      <p>おかげさまで定員40名に達しましたが、ご好評につき<b>2枠だけ増枠</b>しました。<br>残りわずかですので、お早めにお申し込みください。</p>
+    </div>
     <p class="again">開催日</p>
     <div class="date" aria-label="2026年11月23日 月曜日 祝日">
       <span class="y">2026</span><span class="md">11.23</span><span class="dow">月・祝</span>
@@ -411,7 +422,7 @@
         <li data-step="2"><span class="num">2</span>確認</li>
         <li data-step="3"><span class="num">3</span>完了</li>
       </ol>
-      <p class="form-lead">定員<b>42名</b>／締切 <b><span class="js-deadline"></span></b>（定員になり次第終了）</p>
+      <p class="form-lead">定員<b>42名</b>（2枠増枠）／締切 <b><span class="js-deadline"></span></b>（定員になり次第終了）</p>
 
       <!-- STEP 1: 入力 -->
       <form id="entry-form" novalidate>

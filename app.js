@@ -466,7 +466,7 @@
     $('.form-lead').hidden = true;
     $('#closed-message').textContent = message;
     $('#closed-view').hidden = false;
-    $$('.cta, .sticky-cta').forEach((el) => { el.hidden = true; });
+    $$('.cta, .sticky-cta, .extra-seats').forEach((el) => { el.hidden = true; });
   }
 
   function formatDeadline(iso) {
